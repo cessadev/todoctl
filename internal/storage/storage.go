@@ -48,6 +48,7 @@ func (s *Store) load() error {
 	if err != nil {
 		if os.IsNotExist(err) {
 			s.tasks = []Task{}
+			s.maxID = 0
 			return nil
 		}
 		return err
@@ -55,10 +56,21 @@ func (s *Store) load() error {
 
 	if len(data) == 0 {
 		s.tasks = []Task{}
+		s.maxID = 0
 		return nil
 	}
 
-	return json.Unmarshal(data, &s.tasks)
+	if err := json.Unmarshal(data, &s.tasks); err != nil {
+		return err
+	}
+
+	for _, task := range s.tasks {
+		if task.ID > s.maxID {
+			s.maxID = task.ID
+		}
+	}
+
+	return nil
 }
 
 func (s *Store) save() error {
@@ -88,4 +100,15 @@ func (s *Store) Add(text string) (int, error) {
 	}
 
 	return newTask.ID, nil
+}
+
+/** Returns a copy of all tasks */
+func (s *Store) GetAll() []Task {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	/** Avoids overmodification */
+	tasks := make([]Task, len(s.tasks))
+	copy(tasks, s.tasks)
+	return tasks
 }
