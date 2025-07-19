@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"sync"
 	"time"
 )
 
@@ -14,13 +13,6 @@ const fileName = "tasks.json"
 var (
 	ErrTaskNotFound = fmt.Errorf("Task not found")
 )
-
-type Store struct {
-	mu    sync.Mutex
-	tasks []Task
-	maxID int
-	path  string
-}
 
 func NewStore() (*Store, error) {
 	homeDir, err := os.UserHomeDir()

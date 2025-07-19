@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var addCmd = &cobra.Command{
+var add = &cobra.Command{
 	Use:   "add [message]",
 	Short: "Add a new task",
 	Args:  cobra.MinimumNArgs(1),
@@ -32,5 +32,5 @@ var addCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(addCmd)
+	root.AddCommand(add)
 }
