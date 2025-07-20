@@ -6,7 +6,13 @@ import (
 	"sort"
 
 	"github.com/cessadev/todoctl/internal/storage"
+	"github.com/cessadev/todoctl/utils"
 	"github.com/spf13/cobra"
+)
+
+var (
+	onlyHigh    bool
+	onlyRegular bool
 )
 
 var list = &cobra.Command{
@@ -25,8 +31,21 @@ var list = &cobra.Command{
 			return tasks[i].CreatedAt.After(tasks[j].CreatedAt)
 		})
 
+		if onlyHigh && onlyRegular {
+			fmt.Fprintln(os.Stderr, "You cannot use --high-priority and --regular-task at the same time")
+			os.Exit(1)
+		}
+
+		if onlyHigh {
+			tasks = utils.FilterHighPriority(tasks)
+		}
+
+		if onlyRegular {
+			tasks = utils.FilterRegularTasks(tasks)
+		}
+
 		if len(tasks) == 0 {
-			fmt.Println("📭 There are no pending tasks.")
+			fmt.Println("📭 There are no pending tasks")
 			return
 		}
 
@@ -52,5 +71,7 @@ var list = &cobra.Command{
 }
 
 func init() {
+	list.Flags().BoolVarP(&onlyHigh, "high-priority", "p", false, "Show only high priority tasks")
+	list.Flags().BoolVarP(&onlyRegular, "regular-task", "r", false, "Show only regular tasks")
 	root.AddCommand(list)
 }
