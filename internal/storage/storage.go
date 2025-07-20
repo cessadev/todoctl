@@ -85,13 +85,14 @@ func (s *Store) save() error {
 	return os.WriteFile(s.path, data, 0644)
 }
 
-func (s *Store) Add(text string) (int, error) {
+func (s *Store) Add(text string, highPriority bool) (int, error) {
 	s.maxID++
 	newTask := Task{
-		ID:        s.maxID,
-		Text:      text,
-		Done:      false,
-		CreatedAt: time.Now(),
+		ID:           s.maxID,
+		Text:         text,
+		Done:         false,
+		HighPriority: highPriority,
+		CreatedAt:    time.Now(),
 	}
 
 	s.tasks = append(s.tasks, newTask)

@@ -30,17 +30,22 @@ var list = &cobra.Command{
 			return
 		}
 
-		fmt.Println("📋 Task list:")
 		for _, task := range tasks {
 			status := "⏳ Pending"
 			if task.Done {
 				status = "✅ Completed"
 			}
 
-			fmt.Printf("- [%d] %s | %s | %s\n",
+			priority := "📋 Regular task"
+			if task.HighPriority {
+				priority = "⚠️  High priority"
+			}
+
+			fmt.Printf("- [%d] %s | %s | %s | %s\n",
 				task.ID,
 				task.Text,
 				status,
+				priority,
 				task.CreatedAt.Format("2006-01-02 15:04"))
 		}
 	},

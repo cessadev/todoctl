@@ -8,6 +8,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var highPriority bool
+
 var add = &cobra.Command{
 	Use:   "add [message]",
 	Short: "Add a new task",
@@ -21,7 +23,7 @@ var add = &cobra.Command{
 			os.Exit(1)
 		}
 
-		id, err := store.Add(taskText)
+		id, err := store.Add(taskText, highPriority)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "The task could not be saved: %v\n", err)
 			os.Exit(1)
@@ -32,5 +34,6 @@ var add = &cobra.Command{
 }
 
 func init() {
+	add.Flags().BoolVarP(&highPriority, "high", "H", false, "Mark as high priority")
 	root.AddCommand(add)
 }
