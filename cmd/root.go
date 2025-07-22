@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var root = &cobra.Command{
+var rootCmd = &cobra.Command{
 	Use:   "todoctl",
 	Short: "Task manager from the terminal",
 	Long:  `A CLI tool to manage your daily tasks`,
@@ -18,7 +18,7 @@ var root = &cobra.Command{
 }
 
 func Execute() {
-	if err := root.Execute(); err != nil {
+	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}

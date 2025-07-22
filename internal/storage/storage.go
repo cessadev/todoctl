@@ -103,6 +103,25 @@ func (s *Store) Add(text string, highPriority bool) (int, error) {
 	return newTask.ID, nil
 }
 
+func (s *Store) MarkDone(id int) error {
+	s.mu.Lock()
+	var task *Task
+	for i := range s.tasks {
+		if s.tasks[i].ID == id {
+			s.tasks[i].Done = true
+			task = &s.tasks[i]
+			break
+		}
+	}
+	s.mu.Unlock()
+
+	if task == nil {
+		return ErrTaskNotFound
+	}
+
+	return s.save()
+}
+
 /** Returns a copy of all tasks */
 func (s *Store) GetAll() []Task {
 	s.mu.Lock()

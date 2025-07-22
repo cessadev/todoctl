@@ -73,5 +73,5 @@ var list = &cobra.Command{
 func init() {
 	list.Flags().BoolVarP(&onlyHigh, "high-priority", "p", false, "Show only high priority tasks")
 	list.Flags().BoolVarP(&onlyRegular, "regular-task", "r", false, "Show only regular tasks")
-	root.AddCommand(list)
+	rootCmd.AddCommand(list)
 }
