@@ -35,5 +35,6 @@ var add = &cobra.Command{
 
 func init() {
 	add.Flags().BoolVarP(&highPriority, "high-priority", "p", false, "Mark as high priority")
+	add.Flags().BoolVarP(&onlyRegular, "regular-task", "r", false, "Show only regular tasks")
 	root.AddCommand(add)
 }
