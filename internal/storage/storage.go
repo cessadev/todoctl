@@ -132,3 +132,25 @@ func (s *Store) GetAll() []Task {
 	copy(tasks, s.tasks)
 	return tasks
 }
+
+func (s *Store) Delete(id int) error {
+	s.mu.Lock()
+	index := -1
+	for i, task := range s.tasks {
+		if task.ID == id {
+			index = i
+			break
+		}
+	}
+
+	if index == -1 {
+		s.mu.Unlock()
+		return ErrTaskNotFound
+	}
+
+	/** Remove slice element */
+	s.tasks = append(s.tasks[:index], s.tasks[index+1:]...)
+	s.mu.Unlock()
+
+	return s.save()
+}
