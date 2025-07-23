@@ -23,3 +23,23 @@ func FilterRegularTasks(tasks []storage.Task) []storage.Task {
 	}
 	return filtered
 }
+
+func FilterPending(tasks []storage.Task) []storage.Task {
+	var filtered []storage.Task
+	for _, task := range tasks {
+		if !task.Done {
+			filtered = append(filtered, task)
+		}
+	}
+	return filtered
+}
+
+func FilterCompleted(tasks []storage.Task) []storage.Task {
+	var filtered []storage.Task
+	for _, task := range tasks {
+		if task.Done {
+			filtered = append(filtered, task)
+		}
+	}
+	return filtered
+}
