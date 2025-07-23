@@ -133,6 +133,21 @@ func (s *Store) GetAll() []Task {
 	return tasks
 }
 
+func (s *Store) GetByID(id int) (*Task, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	for i := range s.tasks {
+		if s.tasks[i].ID == id {
+			/** Return a copy to avoid external modifications */
+			task := s.tasks[i]
+			return &task, nil
+		}
+	}
+
+	return nil, ErrTaskNotFound
+}
+
 func (s *Store) Delete(id int) error {
 	s.mu.Lock()
 	index := -1
