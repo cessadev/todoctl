@@ -11,10 +11,12 @@ import (
 )
 
 var (
-	onlyHighPriority bool
-	onlyRegular      bool
-	showCompleted    bool
-	showAll          bool
+	onlyHighPriority  bool
+	onlyRegular       bool
+	showCompleted     bool
+	showAll           bool
+	regularCompleted  bool
+	priorityCompleted bool
 )
 
 var list = &cobra.Command{
@@ -36,6 +38,7 @@ var list = &cobra.Command{
 		})
 
 		/** Validate mutually exclusive flags */
+		/**
 		flagCount := 0
 		if showCompleted {
 			flagCount++
@@ -49,14 +52,40 @@ var list = &cobra.Command{
 		if onlyRegular {
 			flagCount++
 		}
+		*/
+
+		// Validar flags mutuamente excluyentes
+		flagCount := 0
+		flags := []bool{showCompleted, showAll, onlyHighPriority, onlyRegular, regularCompleted, priorityCompleted}
+		for _, f := range flags {
+			if f {
+				flagCount++
+			}
+		}
 
 		if flagCount > 1 {
-			fmt.Fprintln(os.Stderr, "❌ You can only use one filter at a time: --completed, --all, --high-priority, or --regular-task")
+			fmt.Fprintln(os.Stderr, "You can only use one filter at a time")
 			os.Exit(1)
 		}
 
 		/** Apply filters */
-		if showCompleted {
+		if regularCompleted {
+			tasks = utils.FilterCompleted(tasks)
+			tasks = utils.FilterRegularTasks(tasks)
+			if len(tasks) == 0 {
+				fmt.Println("📭 No regular tasks completed")
+				return
+			}
+			fmt.Println("✅ Regular tasks completed:")
+		} else if priorityCompleted {
+			tasks = utils.FilterCompleted(tasks)
+			tasks = utils.FilterHighPriority(tasks)
+			if len(tasks) == 0 {
+				fmt.Println("📭 No high priority tasks completed")
+				return
+			}
+			fmt.Println("✅ High priority tasks completed:")
+		} else if showCompleted {
 			tasks = utils.FilterCompleted(tasks)
 			if len(tasks) == 0 {
 				fmt.Println("📭 No tasks completed")
@@ -115,5 +144,7 @@ func init() {
 	list.Flags().BoolVarP(&onlyRegular, "regular", "r", false, "Show only regular tasks")
 	list.Flags().BoolVarP(&showCompleted, "completed", "c", false, "Show only completed tasks")
 	list.Flags().BoolVarP(&showAll, "all", "a", false, "Show all tasks")
+	list.Flags().BoolVarP(&regularCompleted, "regular-completed", "R", false, "Show only completed regular tasks")
+	list.Flags().BoolVarP(&priorityCompleted, "priority-completed", "P", false, "Show only completed high priority tasks")
 	rootCmd.AddCommand(list)
 }
