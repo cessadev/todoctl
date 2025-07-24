@@ -38,23 +38,6 @@ var list = &cobra.Command{
 		})
 
 		/** Validate mutually exclusive flags */
-		/**
-		flagCount := 0
-		if showCompleted {
-			flagCount++
-		}
-		if showAll {
-			flagCount++
-		}
-		if onlyHighPriority {
-			flagCount++
-		}
-		if onlyRegular {
-			flagCount++
-		}
-		*/
-
-		// Validar flags mutuamente excluyentes
 		flagCount := 0
 		flags := []bool{showCompleted, showAll, onlyHighPriority, onlyRegular, regularCompleted, priorityCompleted}
 		for _, f := range flags {
