@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/cessadev/todoctl/cmd"
+	"github.com/cessadev/tudoctl/cmd"
 )
 
 func main() {

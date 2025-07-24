@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/cessadev/todoctl/internal/storage"
+	"github.com/cessadev/tudoctl/internal/storage"
 )
 
 func FilterHighPriority(tasks []storage.Task) []storage.Task {

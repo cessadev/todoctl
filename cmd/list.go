@@ -5,8 +5,8 @@ import (
 	"os"
 	"sort"
 
-	"github.com/cessadev/todoctl/internal/storage"
-	"github.com/cessadev/todoctl/utils"
+	"github.com/cessadev/tudoctl/internal/storage"
+	"github.com/cessadev/tudoctl/utils"
 	"github.com/spf13/cobra"
 )
 

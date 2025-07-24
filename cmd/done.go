@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/cessadev/todoctl/internal/storage"
+	"github.com/cessadev/tudoctl/internal/storage"
 	"github.com/spf13/cobra"
 )
 

@@ -8,7 +8,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "todoctl",
+	Use:   "tudoctl",
 	Short: "Task manager from the terminal",
 	Long:  `A CLI tool to manage your daily tasks`,
 	Run: func(cmd *cobra.Command, args []string) {

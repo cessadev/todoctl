@@ -1,4 +1,4 @@
-module github.com/cessadev/todoctl
+module github.com/cessadev/tudoctl
 
 go 1.23.2
 
