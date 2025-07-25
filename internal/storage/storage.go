@@ -103,6 +103,34 @@ func (s *Store) Add(text string, highPriority bool) (int, error) {
 	return newTask.ID, nil
 }
 
+func (s *Store) UpdateDescription(id int, newText string) error {
+	s.mu.Lock()
+	index := -1
+	for i, task := range s.tasks {
+		if task.ID == id {
+			index = i
+			break
+		}
+	}
+
+	if index == -1 {
+		s.mu.Unlock()
+		return ErrTaskNotFound
+	}
+
+	/** Verify that the task is pending */
+	if s.tasks[index].Done {
+		s.mu.Unlock()
+		return fmt.Errorf("cannot update a completed task")
+	}
+
+	/** Update description */
+	s.tasks[index].Text = newText
+	s.mu.Unlock()
+
+	return s.save()
+}
+
 func (s *Store) MarkDone(id int) error {
 	s.mu.Lock()
 	var task *Task

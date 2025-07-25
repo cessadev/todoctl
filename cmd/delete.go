@@ -15,7 +15,7 @@ var delete = &cobra.Command{
 	Use:     "delete [id]",
 	Short:   "Delete a task by ID",
 	Args:    cobra.ExactArgs(1),
-	Example: "todoctl delete 3",
+	Example: "tudoctl delete 3",
 	Run: func(cmd *cobra.Command, args []string) {
 		id, err := strconv.Atoi(args[0])
 		if err != nil {

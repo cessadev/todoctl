@@ -11,9 +11,10 @@ import (
 var highPriority bool
 
 var add = &cobra.Command{
-	Use:   "add [message]",
-	Short: "Add a new task",
-	Args:  cobra.MinimumNArgs(1),
+	Use:     "add [message]",
+	Short:   "Add a new task",
+	Args:    cobra.MinimumNArgs(1),
+	Example: "tudoctl add \"New task\" [--flags]",
 	Run: func(cmd *cobra.Command, args []string) {
 		taskText := args[0]
 

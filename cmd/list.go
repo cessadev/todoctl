@@ -23,6 +23,7 @@ var list = &cobra.Command{
 	Use:     "list",
 	Short:   "Displays all saved tasks",
 	Aliases: []string{"ls"},
+	Example: "tudoctl list [--flags]",
 	Run: func(cmd *cobra.Command, args []string) {
 		store, err := storage.NewStore()
 		if err != nil {

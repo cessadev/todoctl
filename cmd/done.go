@@ -10,9 +10,10 @@ import (
 )
 
 var done = &cobra.Command{
-	Use:   "done [id]",
-	Short: "Mark a task as completed",
-	Args:  cobra.ExactArgs(1),
+	Use:     "done [id]",
+	Short:   "Mark a task as completed",
+	Args:    cobra.ExactArgs(1),
+	Example: "tudoctl done 3",
 	Run: func(cmd *cobra.Command, args []string) {
 		id, err := strconv.Atoi(args[0])
 		if err != nil {
